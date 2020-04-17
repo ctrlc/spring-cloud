@@ -20,6 +20,7 @@
         <fastjson.version>1.2.58</fastjson.version>
         <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.19</mysql.version>
+        <lang3.version>3.5</lang3.version>
     </properties>
 
     <dependencies>
@@ -63,7 +64,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
+            <version>${lang3.version}</version>
         </dependency>
 
         <!-- JWT依赖 -->
@@ -76,6 +77,12 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
+        </dependency>
+
+        <!--Security依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
 
