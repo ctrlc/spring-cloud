@@ -43,8 +43,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @Return List<SysRoleEntity> 角色名集合
      */
     @Override
-    public List<Role> selectSysRoleByUserId(Long userId) {
-        return this.baseMapper.selectSysRoleByUserId(userId);
+    public List<Role> selectRoleByUserId(Long userId) {
+        return this.baseMapper.selectRoleByUserId(userId);
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @Return List<SysMenuEntity> 角色名集合
      */
     @Override
-    public List<Permission> selectSysMenuByUserId(Long userId) {
-        return this.baseMapper.selectSysMenuByUserId(userId);
+    public List<Permission> selectMenuByUserId(Long userId) {
+        return this.baseMapper.selectMenuByUserId(userId);
     }
 }

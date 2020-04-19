@@ -21,6 +21,7 @@ import java.util.Set;
  */
 @Component
 public class UserPermissionEvaluator implements PermissionEvaluator {
+
     @Autowired
     private UserService userService;
 
@@ -43,7 +44,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         SelfUserEntity selfUserEntity = (SelfUserEntity) authentication.getPrincipal();
         // 查询用户权限(这里可以将权限放入缓存中提升效率)
         Set<String> permissions = new HashSet<>();
-        List<Permission> sysMenuEntityList = userService.selectSysMenuByUserId(selfUserEntity.getUserId());
+        List<Permission> sysMenuEntityList = userService.selectMenuByUserId(selfUserEntity.getId());
         for (Permission per : sysMenuEntityList) {
             permissions.add(per.getPerms());
         }
@@ -57,5 +58,19 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
         return false;
+    }
+
+
+    public static void main(String[] args) {
+        Set<String> permissions = new HashSet<>();
+        String permission = "sys:user:info";
+
+        permissions.add(null);
+        permissions.add("sys:user:info");
+
+        // 权限对比
+        if (permissions.contains(permission.toString())) {
+            System.out.println("wow");
+        }
     }
 }

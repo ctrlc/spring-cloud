@@ -21,7 +21,7 @@ public class SelfUserEntity implements Serializable, UserDetails {
 	/**
 	 * 用户ID
 	 */
-	private Long userId;
+	private Long id;
 	/**
 	 * 用户名
 	 */

@@ -62,6 +62,11 @@ public class User implements Serializable {
 	private String idCard;
 
 	/**
+	 * 状态
+	 */
+	private String status;
+
+	/**
 	 * 创建时间
 	 */
 	private LocalDateTime createTime;

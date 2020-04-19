@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.sa.mapper.UserMapper">
 
 	<!-- 通用查询映射结果 -->
@@ -14,28 +13,27 @@
 		<result column="id_card" property="idCard" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
 	</resultMap>
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-        id, username, password, truename, sex, address, id_card, create_time, update_time
+        id, username, password, truename, sex, address, id_card, create_time, update_time, status
     </sql>
-	
+
 	<!-- 查询用户的所有权限 -->
-	<select id="selectSysMenuByUserId" resultType="com.sa.domain.Permission" parameterType="long">
-		SELECT DISTINCT m.* FROM sys_user_role ur
-			LEFT JOIN sys_role_menu rm ON ur.role_id = rm.role_id
-			LEFT JOIN sys_menu m ON rm.menu_id = m.menu_id
+	<select id="selectMenuByUserId" resultType="com.sa.domain.Permission" parameterType="long">
+		SELECT DISTINCT p.* FROM sys_user_role ur
+			LEFT JOIN sys_role_permission rp ON ur.role_id = rp.role_id
+			LEFT JOIN sys_permission p ON rp.permission_id = p.id
 		WHERE ur.user_id = #{userId}
 	</select>
 
 	<!-- 查询用户所有角色 -->
-	<select id="selectSysRoleByUserId" resultType="com.sa.domain.Role" parameterType="long">
+	<select id="selectRoleByUserId" resultType="com.sa.domain.Role" parameterType="long">
 		SELECT sr.* FROM sys_role sr
-		LEFT JOIN sys_user_role se ON se.role_id = sr.role_id
+		LEFT JOIN sys_user_role se ON se.role_id = sr.id
 		WHERE se.user_id = #{userId}
 	</select>
-
-
 
 </mapper>

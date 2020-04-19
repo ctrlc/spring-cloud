@@ -1,9 +1,9 @@
 package com.sa.security;
 
 import com.sa.domain.Role;
-import com.sa.service.UserService;
 import com.sa.security.domain.SelfUserEntity;
 import com.sa.security.service.SelfUserDetailsService;
+import com.sa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +23,7 @@ import java.util.Set;
 
 /**
  * 自定义登录验证
+ *
  * @Author Sans
  * @CreateTime 2019/10/1 19:11
  */
@@ -32,6 +33,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     private SelfUserDetailsService selfUserDetailsService;
     @Autowired
     private UserService userService;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取表单输入中返回的用户名
@@ -48,22 +50,42 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("密码不正确");
         }
         // 还可以加一些其他信息的判断，比如用户账号已停用等判断
-        if (userInfo.getStatus().equals("PROHIBIT")){
+        if ("PROHIBIT".equals(userInfo.getStatus())) {
             throw new LockedException("该用户已被冻结");
         }
         // 角色集合
         Set<GrantedAuthority> authorities = new HashSet<>();
         // 查询用户角色
-        List<Role> sysRoleEntityList = userService.selectSysRoleByUserId(userInfo.getUserId());
-        for (Role role : sysRoleEntityList){
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
+        List<Role> sysRoleEntityList = userService.selectRoleByUserId(userInfo.getId());
+        for (Role role : sysRoleEntityList) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleCode()));
         }
         userInfo.setAuthorities(authorities);
         // 进行登录
         return new UsernamePasswordAuthenticationToken(userInfo, password, authorities);
     }
+
     @Override
     public boolean supports(Class<?> authentication) {
         return true;
+    }
+
+
+
+
+
+    public static void main(String[] args) {
+
+        if (!new BCryptPasswordEncoder().matches("123456", "$2a$10$aeeySOSnzT7lIK.aLCaNg.gczJWBdplzSLurjOEKhocn110/AxpWy")) {
+            System.out.println("密码不正确");
+        }
+
+        String pass = "123456";
+        BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
+        String hashPass = bcryptPasswordEncoder.encode(pass);
+        System.out.println(hashPass);
+
+        boolean f = new BCryptPasswordEncoder().matches("123456", hashPass);
+        System.out.println(f);
     }
 }

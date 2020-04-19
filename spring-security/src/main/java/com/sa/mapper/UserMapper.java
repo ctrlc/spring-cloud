@@ -21,19 +21,22 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 通过用户ID查询角色集合
+     *
      * @Author Sans
      * @CreateTime 2019/9/18 18:01
-     * @Param  userId 用户ID
+     * @Param userId 用户ID
      * @Return List<SysRoleEntity> 角色名集合
      */
-    List<Role> selectSysRoleByUserId(Long userId);
+    List<Role> selectRoleByUserId(Long userId);
+
     /**
      * 通过用户ID查询权限集合
+     *
      * @Author Sans
      * @CreateTime 2019/9/18 18:01
-     * @Param  userId 用户ID
+     * @Param userId 用户ID
      * @Return List<SysMenuEntity> 角色名集合
      */
-    List<Permission> selectSysMenuByUserId(Long userId);
-	
+    List<Permission> selectMenuByUserId(Long userId);
+
 }
