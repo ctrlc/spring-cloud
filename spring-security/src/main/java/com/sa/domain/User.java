@@ -1,13 +1,19 @@
 package com.sa.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>
@@ -21,7 +27,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_user")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
 	private static final long serialVersionUID=1L;
 
@@ -77,4 +83,53 @@ public class User implements Serializable {
 	private LocalDateTime updateTime;
 
 
+
+
+	/**
+	 * 用户角色
+	 */
+	@TableField(exist = false)
+	private Collection<GrantedAuthority> authorities;
+	/**
+	 * 账户是否过期
+	 */
+	@TableField(exist = false)
+	private boolean isAccountNonExpired = false;
+	/**
+	 * 账户是否被锁定
+	 */
+	@TableField(exist = false)
+	private boolean isAccountNonLocked = false;
+	/**
+	 * 证书是否过期
+	 */
+	@TableField(exist = false)
+	private boolean isCredentialsNonExpired = false;
+	/**
+	 * 账户是否有效
+	 */
+	@TableField(exist = false)
+	private boolean isEnabled = true;
+
+
+	@Override
+	public Collection<GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return isAccountNonExpired;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return isAccountNonLocked;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return isCredentialsNonExpired;
+	}
+	@Override
+	public boolean isEnabled() {
+		return isEnabled;
+	}
 }

@@ -8,7 +8,6 @@ import com.sa.domain.User;
 import com.sa.service.PermissionService;
 import com.sa.service.RoleService;
 import com.sa.service.UserService;
-import com.sa.security.domain.SelfUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +44,9 @@ public class AdminController {
     @RequestMapping(value = "/info",method = RequestMethod.GET)
     public Map<String,Object> userLogin(){
         Map<String,Object> result = new HashMap<>();
-        SelfUserEntity userDetails = SecurityUtil.getUserInfo();
+        User user = SecurityUtil.getUserInfo();
         result.put("title","管理端信息");
-        result.put("data",userDetails);
+        result.put("data",user);
         return ResultUtil.resultSuccess(result);
     }
 

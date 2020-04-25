@@ -7,6 +7,8 @@ import com.sa.domain.Role;
 import com.sa.domain.User;
 import com.sa.mapper.UserMapper;
 import com.sa.service.UserService;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,8 @@ import java.util.List;
  * @author sa
  * @date 2020-04-17
  */
-@Service("userService")
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+@Service
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
 
     /**
      * 根据用户名查询实体
@@ -35,6 +37,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.lambda().eq(User::getUsername,username);
         return this.baseMapper.selectOne(queryWrapper);
     }
+
+
     /**
      * 通过用户ID查询角色集合
      * @Author Sans
@@ -47,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.baseMapper.selectRoleByUserId(userId);
     }
 
+
     /**
      * 根据用户ID查询权限集合
      * @Author Sans
@@ -57,5 +62,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<Permission> selectMenuByUserId(Long userId) {
         return this.baseMapper.selectMenuByUserId(userId);
+    }
+
+
+
+    /**
+     * 查询用户信息
+     *
+     * @Author Sans
+     * @CreateTime 2019/9/13 17:23
+     * @Param username  用户名
+     * @Return UserDetails SpringSecurity用户信息
+     */
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 查询用户信息
+        User user = this.selectUserByName(username);
+        return user;
     }
 }

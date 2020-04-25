@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sa.domain.Permission;
 import com.sa.domain.Role;
 import com.sa.domain.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -15,7 +18,7 @@ import java.util.List;
  * @author sa
  * @date 2020-04-17
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<User>, UserDetailsService {
 
     /**
      * 根据用户名查询实体
@@ -46,5 +49,9 @@ public interface UserService extends IService<User> {
      * @Return List<SysMenuEntity> 角色名集合
      */
     List<Permission> selectMenuByUserId(Long userId);
+
+
+
+    User loadUserByUsername(String username) throws UsernameNotFoundException;
 
 }

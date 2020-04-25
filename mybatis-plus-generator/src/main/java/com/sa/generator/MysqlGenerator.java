@@ -42,7 +42,7 @@ public class MysqlGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         //输出文件路径
-        gc.setOutputDir("D:\\generation");
+        gc.setOutputDir("/home/sa/Downloads/generation/");
         // 是否文件覆盖
         gc.setFileOverride(true);
         // 不需要ActiveRecord(实体类继承Model)特性的请改为false
@@ -54,7 +54,7 @@ public class MysqlGenerator {
         // XML ColumnList
         gc.setBaseColumnList(true);
         // 作者
-        gc.setAuthor("generation");
+        gc.setAuthor("sa");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setControllerName("%sController");
@@ -69,9 +69,9 @@ public class MysqlGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
-        dsc.setUrl("jdbc:mysql://192.168.1.100:3306/spring-cloud?serverTimezone=UTC&useSSL=false");
+        dsc.setUsername("myroot");
+        dsc.setPassword("sa123456");
+        dsc.setUrl("jdbc:mysql://rm-bp12m3yhq3w7mvv27ho.mysql.rds.aliyuncs.com:3306/spring-cloud?serverTimezone=UTC&useSSL=false");
         mpg.setDataSource(dsc);
 
         // 策略配置 skipView

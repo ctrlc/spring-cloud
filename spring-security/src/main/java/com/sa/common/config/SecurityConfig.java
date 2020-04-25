@@ -5,6 +5,7 @@ import com.sa.security.UserPermissionEvaluator;
 import com.sa.security.filter.CustomAuthenticationFilter;
 import com.sa.security.handler.*;
 import com.sa.security.jwt.JWTAuthenticationTokenFilter;
+import com.sa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserAuthenticationProvider userAuthenticationProvider;
 
+    @Autowired
+    UserService userService;
+
 
     /**
      * 加密方式
@@ -109,7 +113,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 配置登录验证逻辑
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+//        auth.userDetailsService(userService);
         //这里可启用我们自己的登陆验证逻辑
         auth.authenticationProvider(userAuthenticationProvider);
     }
@@ -123,6 +129,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @Param http 请求
      */
     @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors()
+            .and()
+            // 取消跨站请求伪造防护
+            .csrf().disable()
+            .authorizeRequests()
+            // 不进行权限验证的请求或资源(从配置文件中读取)
+            .antMatchers(JWTConfig.antMatchers.split(",")).permitAll()
+            // 其他的需要登陆后才能访问
+            .anyRequest().authenticated()
+            .and()
+            // 配置未登录自定义处理类
+            .httpBasic().authenticationEntryPoint(userAuthenticationEntryPointHandler)
+            .and()
+            // 配置没有权限自定义处理类
+            .exceptionHandling().accessDeniedHandler(userAuthAccessDeniedHandler);
+
+
+        http.addFilter(customAuthenticationFilter());
+
+        // 添加JWT过滤器
+        http.addFilter(new JWTAuthenticationTokenFilter(authenticationManager()));
+
+    }
+
+
+
+
+
+
+    /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 不进行权限验证的请求或资源(从配置文件中读取)
@@ -165,5 +202,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 添加JWT过滤器
         http.addFilter(new JWTAuthenticationTokenFilter(authenticationManager()));
 
-    }
+    }*/
 }

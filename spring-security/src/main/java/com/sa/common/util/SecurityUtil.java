@@ -1,6 +1,6 @@
 package com.sa.common.util;
 
-import com.sa.security.domain.SelfUserEntity;
+import com.sa.domain.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -18,9 +18,9 @@ public class SecurityUtil {
     /**
      * 获取当前用户信息
      */
-    public static SelfUserEntity getUserInfo(){
-        SelfUserEntity userDetails = (SelfUserEntity) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-        return userDetails;
+    public static User getUserInfo(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        return user;
     }
     /**
      * 获取当前用户ID

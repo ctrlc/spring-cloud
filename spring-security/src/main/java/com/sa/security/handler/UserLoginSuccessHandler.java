@@ -3,7 +3,7 @@ package com.sa.security.handler;
 import com.sa.common.config.JWTConfig;
 import com.sa.common.util.JWTTokenUtil;
 import com.sa.common.util.ResultUtil;
-import com.sa.security.domain.SelfUserEntity;
+import com.sa.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -30,8 +30,8 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
         // 组装JWT
-        SelfUserEntity selfUserEntity =  (SelfUserEntity) authentication.getPrincipal();
-        String token = JWTTokenUtil.createAccessToken(selfUserEntity);
+        User user =  (User) authentication.getPrincipal();
+        String token = JWTTokenUtil.createAccessToken(user);
         token = JWTConfig.tokenPrefix + token;
         // 封装返回参数
         Map<String,Object> resultData = new HashMap<>();

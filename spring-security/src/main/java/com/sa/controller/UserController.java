@@ -2,8 +2,8 @@ package com.sa.controller;
 
 import com.sa.common.util.ResultUtil;
 import com.sa.domain.Permission;
+import com.sa.domain.User;
 import com.sa.service.PermissionService;
-import com.sa.security.domain.SelfUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +28,7 @@ public class UserController {
     private PermissionService permissionService;
 
     /**
-     * 用户端信息
+     * 用户端信息   {"code":20000,"data":{"roles":["admin"],"introduction":"I am a super administrator","avatar":"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif","name":"Super Admin"}}
      * @Author Sans
      * @CreateTime 2019/10/2 14:52
      * @Return Map<String,Object> 返回数据MAP
@@ -36,7 +36,7 @@ public class UserController {
     @RequestMapping(value = "/info",method = RequestMethod.GET)
     public Map<String,Object> userLogin(){
         Map<String,Object> result = new HashMap<>();
-        SelfUserEntity userDetails = (SelfUserEntity) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
         result.put("title","用户端信息");
         result.put("data",userDetails);
         return ResultUtil.resultSuccess(result);

@@ -68,6 +68,7 @@ public class ResultUtil {
         resultMap.put("code",500);
         return resultMap;
     }
+
     /**
      * 通用示例
      * @Author Sans

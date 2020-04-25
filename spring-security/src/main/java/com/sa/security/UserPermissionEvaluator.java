@@ -1,8 +1,8 @@
 package com.sa.security;
 
 import com.sa.domain.Permission;
+import com.sa.domain.User;
 import com.sa.service.UserService;
-import com.sa.security.domain.SelfUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
@@ -41,10 +41,10 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Object targetUrl, Object permission) {
         // 获取用户信息
-        SelfUserEntity selfUserEntity = (SelfUserEntity) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         // 查询用户权限(这里可以将权限放入缓存中提升效率)
         Set<String> permissions = new HashSet<>();
-        List<Permission> sysMenuEntityList = userService.selectMenuByUserId(selfUserEntity.getId());
+        List<Permission> sysMenuEntityList = userService.selectMenuByUserId(user.getId());
         for (Permission per : sysMenuEntityList) {
             permissions.add(per.getPerms());
         }

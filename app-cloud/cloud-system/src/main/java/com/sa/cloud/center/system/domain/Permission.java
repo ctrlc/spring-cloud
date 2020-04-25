@@ -1,0 +1,80 @@
+package com.sa.cloud.center.system.domain;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 权限表
+ * </p>
+ *
+ * @author sa
+ * @since 2020-04-16
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("sys_permission")
+public class Permission implements Serializable {
+
+    private static final long serialVersionUID=1L;
+
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 权限名称
+     */
+    private String title;
+
+    /**
+     * 父级权限ID
+     */
+    private Long parentId;
+
+    /**
+     * 权限标识
+     */
+    private String perms;
+
+    /**
+     * 访问地址
+     */
+    private String path;
+
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
+
+    /**
+     * 状态(1可用, 0不可用)
+     */
+    private Integer status;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
+
+
+}

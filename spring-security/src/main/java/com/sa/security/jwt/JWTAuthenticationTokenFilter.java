@@ -2,7 +2,8 @@ package com.sa.security.jwt;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sa.common.config.JWTConfig;
-import com.sa.security.domain.SelfUserEntity;
+import com.sa.common.util.ResultUtil;
+import com.sa.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取请求头中JWT的Token
         String tokenHeader = request.getHeader(JWTConfig.tokenHeader);
         if (null!=tokenHeader && tokenHeader.startsWith(JWTConfig.tokenPrefix)) {
@@ -66,17 +68,21 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                         }
                     }
                     //组装参数
-                    SelfUserEntity selfUserEntity = new SelfUserEntity();
-                    selfUserEntity.setUsername(claims.getSubject());
-                    selfUserEntity.setId(Long.parseLong(claims.getId()));
-                    selfUserEntity.setAuthorities(authorities);
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(selfUserEntity, userId, authorities);
+                    User user = new User();
+                    user.setUsername(claims.getSubject());
+                    user.setId(Long.parseLong(claims.getId()));
+                    user.setAuthorities(authorities);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, userId, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (ExpiredJwtException e){
                 log.info("Token过期");
+                ResultUtil.responseJson(response, ResultUtil.resultCode(401, "Token过期"));;
+                return;
             } catch (Exception e) {
                 log.info("Token无效");
+                ResultUtil.responseJson(response, ResultUtil.resultCode(401, "Token无效"));;
+                return;
             }
         }
         filterChain.doFilter(request, response);

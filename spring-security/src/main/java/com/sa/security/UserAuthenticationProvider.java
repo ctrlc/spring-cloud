@@ -1,7 +1,7 @@
 package com.sa.security;
 
 import com.sa.domain.Role;
-import com.sa.security.domain.SelfUserEntity;
+import com.sa.domain.User;
 import com.sa.security.service.SelfUserDetailsService;
 import com.sa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,7 @@ import java.util.Set;
  */
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
-    private SelfUserDetailsService selfUserDetailsService;
+
     @Autowired
     private UserService userService;
 
@@ -41,28 +40,29 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 获取表单中输入的密码
         String password = (String) authentication.getCredentials();
         // 查询用户是否存在
-        SelfUserEntity userInfo = selfUserDetailsService.loadUserByUsername(userName);
-        if (userInfo == null) {
+        User user = userService.loadUserByUsername(userName);
+//        User userInfo = userService.loadUserByUsername(userName);
+        if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
         // 我们还要判断密码是否正确，这里我们的密码使用BCryptPasswordEncoder进行加密的
-        if (!new BCryptPasswordEncoder().matches(password, userInfo.getPassword())) {
+        if (!new BCryptPasswordEncoder().matches(password, user.getPassword())) {
             throw new BadCredentialsException("密码不正确");
         }
         // 还可以加一些其他信息的判断，比如用户账号已停用等判断
-        if ("PROHIBIT".equals(userInfo.getStatus())) {
+        if ("PROHIBIT".equals(user.getStatus())) {
             throw new LockedException("该用户已被冻结");
         }
         // 角色集合
         Set<GrantedAuthority> authorities = new HashSet<>();
         // 查询用户角色
-        List<Role> sysRoleEntityList = userService.selectRoleByUserId(userInfo.getId());
+        List<Role> sysRoleEntityList = userService.selectRoleByUserId(user.getId());
         for (Role role : sysRoleEntityList) {
             authorities.add(new SimpleGrantedAuthority(role.getRoleCode()));
         }
-        userInfo.setAuthorities(authorities);
+        user.setAuthorities(authorities);
         // 进行登录
-        return new UsernamePasswordAuthenticationToken(userInfo, password, authorities);
+        return new UsernamePasswordAuthenticationToken(user, password, authorities);
     }
 
     @Override
