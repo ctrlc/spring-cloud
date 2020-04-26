@@ -85,17 +85,36 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- 工具类jar -->
+        <dependency>
+            <groupId>com.sa.comm</groupId>
+            <artifactId>comm-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- redis模块jar -->
+        <dependency>
+            <groupId>com.sa.comm</groupId>
+            <artifactId>comm-redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- comm-web-framework 模块　-->
+        <dependency>
+            <groupId>com.sa.comm</groupId>
+            <artifactId>comm-web-framework</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

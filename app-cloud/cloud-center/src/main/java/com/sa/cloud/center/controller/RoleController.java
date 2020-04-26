@@ -2,7 +2,6 @@ package com.sa.cloud.center.controller;
 
 import com.sa.cloud.base.domain.center.Permission;
 import com.sa.cloud.base.domain.center.Role;
-import com.sa.cloud.base.domain.center.TreeDTO;
 import com.sa.cloud.center.service.PermissionService;
 import com.sa.cloud.center.service.RoleService;
 import com.sa.comm.web.framework.web.BaseAction;
@@ -50,7 +49,7 @@ public class RoleController extends BaseAction {
             role.setRoutes(permissionTree);
         }
 
-        this.ajaxObjectSuccess(datas, request, response);
+        this.resultSuccess(datas, request, response);
     }
 
 

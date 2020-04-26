@@ -27,12 +27,12 @@ public class RSAUtil {
     /**
      * 公钥
      */
-    private static String publicKey;
+    private static String publicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMLO/No3u9SNIFlGraYSZwHZ4kNRiWGJzSNzJJ5Z+HWRzNQCXA7p6LkNQBRdNbZ8Ki/Wvx/XX2wUHpSvk1HtsNECAwEAAQ==";
 
     /**
      * 私钥
      */
-    private static String privateKey;
+    private static String privateKey = "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAws782je71I0gWUatphJnAdniQ1GJYYnNI3Mknln4dZHM1AJcDunouQ1AFF01tnwqL9a/H9dfbBQelK+TUe2w0QIDAQABAkBomigfLEoJCXZTOaZIRB1XWx0pNIDmBM5HuK3y8TB+P8horP14ZOzrli0+xfQ48y0aylKuelChAQrMtLnvUPf5AiEA+C47Jq9vs154YCgmTkgvONmwy/oGSN37z+e/fwyWGjsCIQDI8kUL+942dLRiD9Zyk5h0ZkJAqX9xO6jM+3rc8D/kYwIgIVrVSFW7xXek5gd/XnYFIrbfNAreXVy4QzD6Y7DlW5ECIQC9BnF/KWnKDhRVHpLa6w6BiGQQUaGJkdZjJLlZtkJUAwIhAJ881zuAI8AOpb04tSNVZyo8W/YIZ2JTBf9nfbNXVDua";
 
 
     /**
@@ -180,13 +180,12 @@ public class RSAUtil {
 
     /**
      * 获取 PublicKey 对象
-     * @param key
      * @return
      * @throws Exception
      */
-    public static PublicKey getPublicKey(String key) throws Exception {
+    public static PublicKey getPublicKey() throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = (new BASE64Decoder()).decodeBuffer(publicKey);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
@@ -195,13 +194,12 @@ public class RSAUtil {
 
     /**
      * 获取 PrivateKey 对象
-     * @param key
      * @return
      * @throws Exception
      */
-    public static PrivateKey getPrivateKey(String key) throws Exception {
+    public static PrivateKey getPrivateKey() throws Exception {
         byte[] keyBytes;
-        keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        keyBytes = (new BASE64Decoder()).decodeBuffer(privateKey);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey privateKey = keyFactory.generatePrivate(keySpec);

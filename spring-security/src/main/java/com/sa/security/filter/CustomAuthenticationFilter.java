@@ -31,8 +31,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        System.out.println(request.getContentType());
         //当Content-Type为json时尝试身份验证
         if (request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 || request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)) {
@@ -60,20 +58,22 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
-    public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        User user = (User)authResult.getPrincipal();
-//        user.setUsername(authResult.getName());
-//        user.setAuthorities((Collection<GrantedAuthority>) authResult.getAuthorities());
-        String token = JWTConfig.tokenPrefix + JWTTokenUtil.createAccessToken(user);
+    public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+        try {
+            User user = (User) authResult.getPrincipal();
+            String token = JWTConfig.tokenPrefix + JWTTokenUtil.createAccessToken(user);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("Authorization", token);
-        map.put("token", token);
-        Map<String, Object> codeMap = new HashMap<>();
-        codeMap.put("code","000");
-        codeMap.put("data", map);
+            Map<String, Object> map = new HashMap<>();
+            map.put("Authorization", token);
+            map.put("token", token);
+            Map<String, Object> codeMap = new HashMap<>();
+            codeMap.put("code", "000");
+            codeMap.put("data", map);
 
-        ResultUtil.responseJson(response, codeMap);
+            ResultUtil.responseJson(response, codeMap);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }
     }
 
 

@@ -2,6 +2,7 @@ package com.sa.security.jwt;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sa.common.config.JWTConfig;
+import com.sa.common.util.RSAUtil;
 import com.sa.common.util.ResultUtil;
 import com.sa.domain.User;
 import io.jsonwebtoken.Claims;
@@ -49,7 +50,7 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                 String token = tokenHeader.replace(JWTConfig.tokenPrefix, "");
                 // 解析JWT
                 Claims claims = Jwts.parser()
-                        .setSigningKey(JWTConfig.secret)
+                        .setSigningKey(RSAUtil.getPublicKey())
                         .parseClaimsJws(token)
                         .getBody();
                 // 获取用户名

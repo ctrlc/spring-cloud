@@ -32,7 +32,7 @@ public class JWTTokenUtil {
      * @Param selfUserEntity 用户安全实体
      * @Return Token
      */
-    public static String createAccessToken(User user) {
+    public static String createAccessToken(User user) throws Exception {
         // 登陆成功生成JWT
         String token = Jwts.builder()
                 // 放入用户名和用户ID
@@ -48,7 +48,7 @@ public class JWTTokenUtil {
                 // 失效时间
                 .setExpiration(new Date(System.currentTimeMillis() + JWTConfig.expiration))
                 // 签名算法和密钥
-                .signWith(SignatureAlgorithm.HS512, JWTConfig.secret)
+                .signWith(SignatureAlgorithm.RS256, RSAUtil.getPrivateKey())
                 .compact();
         return token;
     }

@@ -1,10 +1,7 @@
 package com.sa.cloud.center.controller;
 
 import com.sa.cloud.base.domain.center.Permission;
-import com.sa.cloud.base.domain.center.Role;
-import com.sa.cloud.base.domain.center.TreeDTO;
 import com.sa.cloud.center.service.PermissionService;
-import com.sa.cloud.center.util.MenuTreeUtil;
 import com.sa.comm.web.framework.web.BaseAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +35,7 @@ public class PermissionController extends BaseAction {
     public void allPermission(HttpServletRequest request, HttpServletResponse response) {
         List<Permission> permissions = permissionService.findAll();
         List<Object> permissionTree = permissionService.getPermissionTree(permissions);
-        this.ajaxObjectSuccess(permissionTree, request, response);
+        this.resultSuccess(permissionTree, request, response);
     }
 
 
@@ -46,7 +43,7 @@ public class PermissionController extends BaseAction {
     public void rolePermission(HttpServletRequest request, HttpServletResponse response) {
         List<Permission> permissions = permissionService.findPermissionByRoleId(1L);
         List<Object> permissionTree = permissionService.getPermissionTree(permissions);
-        this.ajaxObjectSuccess(permissionTree, request, response);
+        this.resultSuccess(permissionTree, request, response);
     }
 
 
