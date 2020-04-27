@@ -69,8 +69,8 @@ public class MysqlGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("myroot");
-        dsc.setPassword("sa123456");
+        dsc.setUsername("root");
+        dsc.setPassword("root");
         dsc.setUrl("jdbc:mysql://rm-bp12m3yhq3w7mvv27ho.mysql.rds.aliyuncs.com:3306/spring-cloud?serverTimezone=UTC&useSSL=false");
         mpg.setDataSource(dsc);
 

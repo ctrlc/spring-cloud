@@ -70,8 +70,8 @@ public class SqlServerGenerator {
         dsc.setDbType(DbType.SQL_SERVER);
         dsc.setDriverName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         dsc.setUsername("sa");
-        dsc.setPassword("password");
-        dsc.setUrl("jdbc:sqlserver://192.168.1.100:1433;DatabaseName=InspectionData");
+        dsc.setPassword("dalei!@#123");
+        dsc.setUrl("jdbc:sqlserver://192.168.11.250:1433;DatabaseName=InspectionData");
         mpg.setDataSource(dsc);
 
         // 策略配置 skipView
