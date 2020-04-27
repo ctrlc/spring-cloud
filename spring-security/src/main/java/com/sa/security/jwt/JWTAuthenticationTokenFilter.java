@@ -1,6 +1,7 @@
 package com.sa.security.jwt;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sa.comm.constant.ErrorCodeEnum;
 import com.sa.common.config.JWTConfig;
 import com.sa.common.util.RSAUtil;
 import com.sa.common.util.ResultUtil;
@@ -30,6 +31,7 @@ import java.util.Map;
 /**
  * JWT接口请求校验拦截器
  * 请求接口时会进入这里验证Token是否合法和过期
+ *
  * @Author Sans
  * @CreateTime 2019/10/5 16:41
  */
@@ -44,7 +46,7 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取请求头中JWT的Token
         String tokenHeader = request.getHeader(JWTConfig.tokenHeader);
-        if (null!=tokenHeader && tokenHeader.startsWith(JWTConfig.tokenPrefix)) {
+        if (null != tokenHeader && tokenHeader.startsWith(JWTConfig.tokenPrefix)) {
             try {
                 // 截取JWT前缀
                 String token = tokenHeader.replace(JWTConfig.tokenPrefix, "");
@@ -55,15 +57,15 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                         .getBody();
                 // 获取用户名
                 String username = claims.getSubject();
-                String userId=claims.getId();
-                if(!StringUtils.isEmpty(username)&&!StringUtils.isEmpty(userId)) {
+                String userId = claims.getId();
+                if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(userId)) {
                     // 获取角色
                     List<GrantedAuthority> authorities = new ArrayList<>();
                     String authority = claims.get("authorities").toString();
-                    if(!StringUtils.isEmpty(authority)){
-                        List<Map<String,String>> authorityMap = JSONObject.parseObject(authority, List.class);
-                        for(Map<String,String> role : authorityMap){
-                            if(!StringUtils.isEmpty(role)) {
+                    if (!StringUtils.isEmpty(authority)) {
+                        List<Map<String, String>> authorityMap = JSONObject.parseObject(authority, List.class);
+                        for (Map<String, String> role : authorityMap) {
+                            if (!StringUtils.isEmpty(role)) {
                                 authorities.add(new SimpleGrantedAuthority(role.get("authority")));
                             }
                         }
@@ -76,13 +78,13 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, userId, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-            } catch (ExpiredJwtException e){
+            } catch (ExpiredJwtException e) {
                 log.info("Token过期");
-                ResultUtil.responseJson(response, ResultUtil.resultCode(401, "Token过期"));;
+                ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0311.getCode(), ErrorCodeEnum.ERROR_A0311.getMessage()));
                 return;
             } catch (Exception e) {
                 log.info("Token无效");
-                ResultUtil.responseJson(response, ResultUtil.resultCode(401, "Token无效"));;
+                ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0312.getCode(), ErrorCodeEnum.ERROR_A0312.getMessage()));
                 return;
             }
         }

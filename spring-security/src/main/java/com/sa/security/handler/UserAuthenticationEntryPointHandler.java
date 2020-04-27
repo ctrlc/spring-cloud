@@ -1,5 +1,6 @@
 package com.sa.security.handler;
 
+import com.sa.comm.constant.ErrorCodeEnum;
 import com.sa.common.util.ResultUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -22,6 +23,6 @@ public class UserAuthenticationEntryPointHandler implements AuthenticationEntryP
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception){
-        ResultUtil.responseJson(response,ResultUtil.resultCode(401,"未登录"));
+        ResultUtil.responseJson(response,ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0220.getCode(),ErrorCodeEnum.ERROR_A0220.getMessage()));
     }
 }

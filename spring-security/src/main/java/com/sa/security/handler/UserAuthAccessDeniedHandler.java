@@ -1,5 +1,6 @@
 package com.sa.security.handler;
 
+import com.sa.comm.constant.ErrorCodeEnum;
 import com.sa.common.util.ResultUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -22,6 +23,6 @@ public class UserAuthAccessDeniedHandler implements AccessDeniedHandler {
      */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception){
-        ResultUtil.responseJson(response,ResultUtil.resultCode(403,"未授权"));
+        ResultUtil.responseJson(response,ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0301.getCode(),ErrorCodeEnum.ERROR_A0301.getMessage()));
     }
 }

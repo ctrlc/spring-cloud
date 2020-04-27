@@ -50,10 +50,10 @@ public class UserAction extends BaseAction {
         User user = jsonObject.toJavaObject(User.class);
         try {
             userService.save(user);
-            this.resultSuccess("数据保存成功!", request, response);
+            this.responseSuccess("数据保存成功!", request, response);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            this.resultFailure("数据保存失败!", request, response);
+            this.responseFailure("数据保存失败!", request, response);
         }
     }
 
@@ -71,10 +71,10 @@ public class UserAction extends BaseAction {
         Wrapper<User> queryWrapper = new QueryWrapper<>(user);
         try {
             IPage<User> list = userService.page(page, queryWrapper);
-            this.resultSuccess(list, request, response);
+            this.responseSuccess(list, request, response);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            this.resultFailure("分页查询失败!", request, response);
+            this.responseFailure("分页查询失败!", request, response);
         }
     }
 
@@ -90,10 +90,10 @@ public class UserAction extends BaseAction {
         User user = jsonObject.toJavaObject(User.class);
         try {
             userService.updateById(user);
-            this.resultSuccess("数据修改成功!", request, response);
+            this.responseSuccess("数据修改成功!", request, response);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            this.resultFailure("数据修改失败!", request, response);
+            this.responseFailure("数据修改失败!", request, response);
         }
     }
 
@@ -109,10 +109,10 @@ public class UserAction extends BaseAction {
         User user = jsonObject.toJavaObject(User.class);
         try {
             userService.removeById(user);
-            this.resultSuccess("数据删除成功!", request, response);
+            this.responseSuccess("数据删除成功!", request, response);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            this.resultFailure("数据删除失败!", request, response);
+            this.responseFailure("数据删除失败!", request, response);
         }
     }
 

@@ -35,7 +35,7 @@ public class PermissionController extends BaseAction {
     public void allPermission(HttpServletRequest request, HttpServletResponse response) {
         List<Permission> permissions = permissionService.findAll();
         List<Object> permissionTree = permissionService.getPermissionTree(permissions);
-        this.resultSuccess(permissionTree, request, response);
+        this.responseSuccess(permissionTree, request, response);
     }
 
 
@@ -43,22 +43,8 @@ public class PermissionController extends BaseAction {
     public void rolePermission(HttpServletRequest request, HttpServletResponse response) {
         List<Permission> permissions = permissionService.findPermissionByRoleId(1L);
         List<Object> permissionTree = permissionService.getPermissionTree(permissions);
-        this.resultSuccess(permissionTree, request, response);
+        this.responseSuccess(permissionTree, request, response);
     }
 
 
-    /*@RequestMapping(value = "/allPermission")
-    public void allPermission(HttpServletRequest request, HttpServletResponse response) {
-        List<Permission> permissions = permissionService.findAll();
-        List<TreeDTO> permissionTree = permissionService.getPermissionTree(permissions);
-        this.ajaxObjectSuccess(permissionTree, request, response);
-    }
-
-
-    @RequestMapping(value = "/rolePermission")
-    public void rolePermission(HttpServletRequest request, HttpServletResponse response) {
-        List<Permission> permissions = permissionService.findPermissionByRoleId(1L);
-        List<TreeDTO> permissionTree = permissionService.getPermissionTree(permissions);
-        this.ajaxObjectSuccess(permissionTree, request, response);
-    }*/
 }

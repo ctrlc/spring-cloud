@@ -49,7 +49,7 @@ public class RoleController extends BaseAction {
             role.setRoutes(permissionTree);
         }
 
-        this.resultSuccess(datas, request, response);
+        this.responseSuccess(datas, request, response);
     }
 
 

@@ -26,7 +26,7 @@ public enum ErrorCodeEnum {
     /**
      * 正确执行后的返回
      */
-    SUCCESS_00000("00000", "一切正常", "操作成功"),
+    SUCCESS_00000("00000", "操作成功"),
 
     // 一级宏观错误码
     ERROR_A0001("A0001", "用户端错误"),
@@ -253,60 +253,25 @@ public enum ErrorCodeEnum {
      */
     private String code;
 
-    /**
-     * 用户提示
-     */
-    private String tip;
 
     /**
      * 错误信息
      */
     private String message;
 
-    /**
-     * 堆栈
-     */
-    private String stackTrace;
-
 
     /**
      * 构造
      *
      * @param code
-     * @param tip
-     */
-    ErrorCodeEnum(String code, String tip) {
-        this.code = code;
-        this.tip = tip;
-    }
-
-    /**
-     * 构造
-     *
-     * @param code
-     * @param tip
      * @param message
      */
-    ErrorCodeEnum(String code, String tip, String message) {
+    ErrorCodeEnum(String code, String message) {
         this.code = code;
-        this.tip = tip;
         this.message = message;
     }
 
-    /**
-     * 构造
-     *
-     * @param code
-     * @param tip
-     * @param message
-     * @param stackTrace
-     */
-    ErrorCodeEnum(String code, String tip, String message, String stackTrace) {
-        this.code = code;
-        this.tip = tip;
-        this.message = message;
-        this.stackTrace = stackTrace;
-    }
+
 
     public String getCode() {
         return code;
@@ -316,13 +281,6 @@ public enum ErrorCodeEnum {
         this.code = code;
     }
 
-    public String getTip() {
-        return tip;
-    }
-
-    public void setTip(String tip) {
-        this.tip = tip;
-    }
 
     public String getMessage() {
         return message;
@@ -330,13 +288,5 @@ public enum ErrorCodeEnum {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getStackTrace() {
-        return stackTrace;
-    }
-
-    public void setStackTrace(String stackTrace) {
-        this.stackTrace = stackTrace;
     }
 }

@@ -38,7 +38,7 @@ public class BaseAction extends ApplicationObjectSupport {
      * @param objs
      * @return
      */
-    protected void resultSuccess(Long totalCount, List<? extends Object> objs, HttpServletRequest request, HttpServletResponse response) {
+    protected void responseSuccess(Long totalCount, List<? extends Object> objs, HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS, objs);
         Map<String, Object> map = new HashMap<>();
         map.put(ResponseEntity.LIST_KEY, objs);
@@ -54,26 +54,26 @@ public class BaseAction extends ApplicationObjectSupport {
      * @param obj
      * @return
      */
-    protected void resultSuccess(Object obj, HttpServletRequest request, HttpServletResponse response) {
+    protected void responseSuccess(Object obj, HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS, obj);
         this.writecallback(resp, request, response);
     }
 
-    protected void resultSuccess(HttpServletRequest request, HttpServletResponse response) {
+    protected void responseSuccess(HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS);
         this.writecallback(resp, request, response);
     }
-    protected void resultSuccess(String msg, HttpServletRequest request, HttpServletResponse response) {
+    protected void responseSuccess(String msg, HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS);
         resp.setMessage(msg);
         this.writecallback(resp, request, response);
     }
 
-    protected void resultFailure(String msg, HttpServletRequest request, HttpServletResponse response) {
-        this.resultFailure(ResponseEntity.STATUS_FAILURE, msg, request, response);
+    protected void responseFailure(String msg, HttpServletRequest request, HttpServletResponse response) {
+        this.responseFailure(ResponseEntity.STATUS_FAILURE, msg, request, response);
     }
 
-    protected void resultFailure(String code, String msg, HttpServletRequest request, HttpServletResponse response) {
+    protected void responseFailure(String code, String msg, HttpServletRequest request, HttpServletResponse response) {
         ResponseEntity resp = new ResponseEntity(code);
         resp.setMessage(msg);
         this.writecallback(resp, request, response);

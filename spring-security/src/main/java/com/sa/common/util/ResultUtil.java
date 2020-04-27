@@ -53,7 +53,7 @@ public class ResultUtil {
      */
     public static Map<String, Object> resultSuccess(Map<String, Object> resultMap){
         resultMap.put("message","操作成功");
-        resultMap.put("code", 200);
+        resultMap.put("code", "200");
         return resultMap;
     }
     /**
@@ -65,7 +65,7 @@ public class ResultUtil {
      */
     public static Map<String, Object> resultError(Map<String, Object> resultMap){
         resultMap.put("message","操作失败");
-        resultMap.put("code",500);
+        resultMap.put("code","500");
         return resultMap;
     }
 
@@ -77,7 +77,7 @@ public class ResultUtil {
      * @Param  msg  信息
      * @Return Map<String,Object> 返回数据MAP
      */
-    public static Map<String, Object> resultCode(Integer code,String msg){
+    public static Map<String, Object> resultCode(String code,String msg){
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("message",msg);
         resultMap.put("code",code);
