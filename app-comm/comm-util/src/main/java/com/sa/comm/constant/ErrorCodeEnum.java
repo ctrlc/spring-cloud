@@ -1,6 +1,5 @@
-package com.dalei.inspection.environment.constant;
+package com.sa.comm.constant;
 
-import lombok.Getter;
 
 /**
  * 错误码
@@ -22,7 +21,6 @@ import lombok.Getter;
  * @author sa
  * @date 2020-04-27
  */
-@Getter
 public enum ErrorCodeEnum {
     /**
      * 正确执行后的返回
@@ -309,5 +307,35 @@ public enum ErrorCodeEnum {
         this.stackTrace = stackTrace;
     }
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
 }
