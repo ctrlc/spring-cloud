@@ -33,10 +33,12 @@ public class UserController {
      * @CreateTime 2019/10/2 14:52
      * @Return Map<String,Object> 返回数据MAP
      */
+//    @PreAuthorize("hasAnyRole('USER','ADMIN') and hasPermission('/user/menuList','sys:user:info')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @RequestMapping(value = "/info",method = RequestMethod.GET)
     public Map<String,Object> userLogin(){
         Map<String,Object> result = new HashMap<>();
-        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         result.put("title","用户端信息");
         result.put("data",userDetails);
         return ResultUtil.resultSuccess(result);
