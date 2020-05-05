@@ -3,6 +3,8 @@ package com.sa.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sa.domain.Permission;
 
+import java.util.List;
+
 /**
  * <p>
  * 权限表 服务类
@@ -13,4 +15,18 @@ import com.sa.domain.Permission;
  */
 public interface PermissionService extends IService<Permission> {
 
+    /**
+     * 将权限列表数据转换成tree
+     *
+     * @param permissions
+     */
+    List<Object> getPermissionTree(List<Permission> permissions);
+
+    /**
+     * 根据角色ID查询权限列表
+     *
+     * @param roleId
+     * @return
+     */
+    List<Permission> findPermissionByRoleId(Long roleId);
 }

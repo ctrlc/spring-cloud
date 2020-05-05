@@ -1,10 +1,13 @@
 package com.sa.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -55,6 +58,18 @@ public class Role implements Serializable {
 	 * 修改时间
 	 */
 	private LocalDateTime updateTime;
+
+	/**
+	 * 临时使用
+	 */
+	@TableField(exist = false)
+	private String key= "editor";
+
+	/**
+	 * 权限信息
+	 */
+	@TableField(exist = false)
+	private List<Object> routes;
 
 
 }

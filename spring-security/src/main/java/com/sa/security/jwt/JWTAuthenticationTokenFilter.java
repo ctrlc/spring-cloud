@@ -1,7 +1,7 @@
 package com.sa.security.jwt;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sa.comm.constant.ErrorCodeEnum;
+import com.sa.comm.web.framework.constant.ErrorCodeEnum;
 import com.sa.common.config.JWTConfig;
 import com.sa.common.util.RSAUtil;
 import com.sa.common.util.ResultUtil;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -61,12 +61,14 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                 if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(userId)) {
                     // 获取角色
                     List<GrantedAuthority> authorities = new ArrayList<>();
+                    List<String> roles = new ArrayList<>();
                     String authority = claims.get("authorities").toString();
                     if (!StringUtils.isEmpty(authority)) {
                         List<Map<String, String>> authorityMap = JSONObject.parseObject(authority, List.class);
                         for (Map<String, String> role : authorityMap) {
                             if (!StringUtils.isEmpty(role)) {
                                 authorities.add(new SimpleGrantedAuthority(role.get("authority")));
+                                roles.add(role.get("authority"));
                             }
                         }
                     }
@@ -75,6 +77,9 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                     user.setUsername(claims.getSubject());
                     user.setId(Long.parseLong(claims.getId()));
                     user.setAuthorities(authorities);
+                    user.setTruename(claims.get("truename").toString());
+                    user.setAvatar(claims.get("avatar").toString());
+                    user.setRoles(roles);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, userId, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
@@ -83,6 +88,7 @@ public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {
                 ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0311.getCode(), ErrorCodeEnum.ERROR_A0311.getMessage()));
                 return;
             } catch (Exception e) {
+                e.printStackTrace();
                 log.info("Token无效");
                 ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0312.getCode(), ErrorCodeEnum.ERROR_A0312.getMessage()));
                 return;

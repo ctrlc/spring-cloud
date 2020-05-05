@@ -73,6 +73,11 @@ public class User implements Serializable, UserDetails {
 	private String status;
 
 	/**
+	 * 头像
+	 */
+	private String avatar;
+
+	/**
 	 * 创建时间
 	 */
 	private LocalDateTime createTime;
@@ -90,6 +95,8 @@ public class User implements Serializable, UserDetails {
 	 */
 	@TableField(exist = false)
 	private Collection<GrantedAuthority> authorities;
+	@TableField(exist = false)
+	private Collection<String> roles;
 	/**
 	 * 账户是否过期
 	 */
@@ -113,9 +120,10 @@ public class User implements Serializable, UserDetails {
 
 
 	@Override
-	public Collection<GrantedAuthority> getAuthorities() {
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return isAccountNonExpired;

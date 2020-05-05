@@ -41,11 +41,9 @@ public class UserLoginSuccessHandler extends BaseAction implements Authenticatio
             String token = JWTTokenUtil.createAccessToken(user);
             token = JWTConfig.tokenPrefix + token;
             // 封装返回参数
-            Map<String, Object> resultData = new HashMap<>();
-            resultData.put("code", "200");
-            resultData.put("msg", "登录成功");
-            resultData.put("token", token);
-            ResultUtil.responseJson(response, resultData);
+            Map<String, Object> data = new HashMap<>();
+            data.put("token", token);
+            this.responseSuccess(data, request, response);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
         }

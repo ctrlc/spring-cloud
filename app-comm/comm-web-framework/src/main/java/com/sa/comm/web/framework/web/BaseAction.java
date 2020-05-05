@@ -2,8 +2,8 @@ package com.sa.comm.web.framework.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.sa.comm.domain.ResponseEntity;
-import org.apache.commons.lang3.StringUtils;
+import com.sa.comm.web.framework.constant.ErrorCodeEnum;
+import com.sa.comm.web.framework.domain.ResponseEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -39,7 +39,7 @@ public class BaseAction extends ApplicationObjectSupport {
      * @return
      */
     protected void responseSuccess(Long totalCount, List<? extends Object> objs, HttpServletRequest request, HttpServletResponse response) {
-        ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS, objs);
+        ResponseEntity resp = new ResponseEntity(ErrorCodeEnum.SUCCESS_00000.getCode(), objs);
         Map<String, Object> map = new HashMap<>();
         map.put(ResponseEntity.LIST_KEY, objs);
         map.put(ResponseEntity.TOTAL_COUNT_KEY, totalCount);
@@ -55,22 +55,22 @@ public class BaseAction extends ApplicationObjectSupport {
      * @return
      */
     protected void responseSuccess(Object obj, HttpServletRequest request, HttpServletResponse response) {
-        ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS, obj);
+        ResponseEntity resp = new ResponseEntity(ErrorCodeEnum.SUCCESS_00000.getCode(), obj);
         this.writecallback(resp, request, response);
     }
 
     protected void responseSuccess(HttpServletRequest request, HttpServletResponse response) {
-        ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS);
+        ResponseEntity resp = new ResponseEntity(ErrorCodeEnum.SUCCESS_00000.getCode());
         this.writecallback(resp, request, response);
     }
     protected void responseSuccess(String msg, HttpServletRequest request, HttpServletResponse response) {
-        ResponseEntity resp = new ResponseEntity(ResponseEntity.STATUS_SUCCESS);
+        ResponseEntity resp = new ResponseEntity(ErrorCodeEnum.SUCCESS_00000.getCode());
         resp.setMessage(msg);
         this.writecallback(resp, request, response);
     }
 
     protected void responseFailure(String msg, HttpServletRequest request, HttpServletResponse response) {
-        this.responseFailure(ResponseEntity.STATUS_FAILURE, msg, request, response);
+        this.responseFailure(ErrorCodeEnum.ERROR_B0001.getCode(), msg, request, response);
     }
 
     protected void responseFailure(String code, String msg, HttpServletRequest request, HttpServletResponse response) {

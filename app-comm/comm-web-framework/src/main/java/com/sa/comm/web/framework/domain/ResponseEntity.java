@@ -1,13 +1,13 @@
-package com.sa.comm.domain;
+package com.sa.comm.web.framework.domain;
 
 public class ResponseEntity {
 
-    //成功
+/*    //成功
     public static final String STATUS_SUCCESS = "000";
     //失败
     public static final String STATUS_FAILURE = "001";
     //session过期
-    public static final String STATUS_SESSION_TIMEOUT = "002";
+    public static final String STATUS_SESSION_TIMEOUT = "002";*/
     //记录数key
     public static final String TOTAL_COUNT_KEY = "count";
     //记录列表key

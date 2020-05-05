@@ -1,7 +1,7 @@
 package com.sa.security.handler;
 
-import com.sa.comm.constant.ErrorCodeEnum;
-import com.sa.common.util.ResultUtil;
+import com.sa.comm.web.framework.constant.ErrorCodeEnum;
+import com.sa.comm.web.framework.web.BaseAction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @Component
-public class UserLoginFailureHandler implements AuthenticationFailureHandler {
+public class UserLoginFailureHandler extends BaseAction implements AuthenticationFailureHandler {
+
     /**
      * 登录失败返回结果
      *
@@ -32,16 +33,16 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
         // 这些对于操作的处理类可以根据不同异常进行不同处理
         if (exception instanceof UsernameNotFoundException) {
             log.info("【登录失败】" + exception.getMessage());
-            ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0201.getCode(), ErrorCodeEnum.ERROR_A0201.getMessage()));
+            this.responseFailure(ErrorCodeEnum.ERROR_A0201.getCode(), ErrorCodeEnum.ERROR_A0201.getMessage(), request, response);
         }
         if (exception instanceof LockedException) {
             log.info("【登录失败】" + exception.getMessage());
-            ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0202.getCode(), ErrorCodeEnum.ERROR_A0202.getMessage()));
+            this.responseFailure(ErrorCodeEnum.ERROR_A0202.getCode(), ErrorCodeEnum.ERROR_A0202.getMessage(), request, response);
         }
         if (exception instanceof BadCredentialsException) {
             log.info("【登录失败】" + exception.getMessage());
-            ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0210.getCode(), ErrorCodeEnum.ERROR_A0210.getMessage()));
+            this.responseFailure(ErrorCodeEnum.ERROR_A0210.getCode(), ErrorCodeEnum.ERROR_A0210.getMessage(), request, response);
         }
-        ResultUtil.responseJson(response, ResultUtil.resultCode(ErrorCodeEnum.ERROR_A0200.getCode(), ErrorCodeEnum.ERROR_A0200.getMessage()));
+        this.responseFailure(ErrorCodeEnum.ERROR_A0200.getCode(), ErrorCodeEnum.ERROR_A0200.getMessage(), request, response);
     }
 }

@@ -21,4 +21,12 @@
         id, title, parent_id, perms, path, icon, sort, status, create_time, update_time
     </sql>
 
+
+    <select id="findPermissionByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select  sp.id, sp.title , sp.parent_id, sp.perms , sp.path , sp.icon from sys_permission sp
+        left join sys_role_permission srp on srp.permission_id  = sp.id
+        left join sys_role  sr on sr.id  = srp.role_id
+        where sr.id  = #{id,jdbcType=BIGINT};
+    </select>
+
 </mapper>

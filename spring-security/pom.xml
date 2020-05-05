@@ -93,13 +93,13 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- redis模块jar -->
+        <!-- redis模块jar
         <dependency>
             <groupId>com.sa.comm</groupId>
             <artifactId>comm-redis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- comm-web-framework 模块　-->
         <dependency>

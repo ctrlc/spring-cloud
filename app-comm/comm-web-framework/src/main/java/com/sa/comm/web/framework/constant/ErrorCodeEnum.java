@@ -1,4 +1,4 @@
-package com.sa.comm.constant;
+package com.sa.comm.web.framework.constant;
 
 
 /**

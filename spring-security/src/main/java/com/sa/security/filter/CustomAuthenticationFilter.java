@@ -1,19 +1,20 @@
 package com.sa.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sa.comm.web.framework.constant.ErrorCodeEnum;
 import com.sa.common.config.JWTConfig;
 import com.sa.common.util.JWTTokenUtil;
 import com.sa.common.util.ResultUtil;
 import com.sa.domain.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,6 +30,14 @@ import java.util.Map;
  */
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    /**
+     * 重写验证方法
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         //当Content-Type为json时尝试身份验证
@@ -39,9 +48,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             ObjectMapper mapper = new ObjectMapper();
             UsernamePasswordAuthenticationToken authRequest = null;
             try (InputStream is = request.getInputStream()) {
-                AuthenticationBean authenticationBean = mapper.readValue(is, AuthenticationBean.class);
-                authRequest = new UsernamePasswordAuthenticationToken(
-                        authenticationBean.getUsername(), authenticationBean.getPassword());
+                User user = mapper.readValue(is, User.class);
+                authRequest = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
             } catch (IOException e) {
                 e.printStackTrace();
                 new UsernamePasswordAuthenticationToken("", "");
@@ -65,16 +73,18 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
             Map<String, Object> map = new HashMap<>();
             map.put("Authorization", token);
-            map.put("token", token);
             Map<String, Object> codeMap = new HashMap<>();
-            codeMap.put("code", "000");
+            codeMap.put("code", ErrorCodeEnum.SUCCESS_00000.getCode());
             codeMap.put("data", map);
 
             ResultUtil.responseJson(response, codeMap);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
     }
+
+
+
 
 
 }

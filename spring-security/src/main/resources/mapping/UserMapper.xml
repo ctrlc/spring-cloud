@@ -14,11 +14,12 @@
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
 		<result column="status" property="status" />
+		<result column="avatar" property="avatar" />
 	</resultMap>
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-        id, username, password, truename, sex, address, id_card, create_time, update_time, status
+        id, username, password, truename, sex, address, id_card, create_time, update_time, status, avatar
     </sql>
 
 	<!-- 查询用户的所有权限 -->

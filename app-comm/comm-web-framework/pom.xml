@@ -29,12 +29,12 @@
 
     <dependencies>
         <!-- comm-util 模块　-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.sa.comm</groupId>
             <artifactId>comm-util</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

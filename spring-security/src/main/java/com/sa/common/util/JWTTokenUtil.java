@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * JWT工具类
@@ -45,6 +46,9 @@ public class JWTTokenUtil {
                 .setIssuer("sa")
                 // 自定义属性 放入用户拥有权限
                 .claim("authorities", JSON.toJSONString(user.getAuthorities()))
+                .claim("truename", user.getTruename())
+                .claim("avatar", user.getAvatar())
+                .claim("roles", user.getRoles())
                 // 失效时间
                 .setExpiration(new Date(System.currentTimeMillis() + JWTConfig.expiration))
                 // 签名算法和密钥
@@ -52,4 +56,6 @@ public class JWTTokenUtil {
                 .compact();
         return token;
     }
+
+
 }
