@@ -19,7 +19,7 @@
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <fastjson.version>1.2.58</fastjson.version>
         <druid.version>1.1.21</druid.version>
-        <mysql.version>8.0.19</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <lang3.version>3.5</lang3.version>
     </properties>
 
